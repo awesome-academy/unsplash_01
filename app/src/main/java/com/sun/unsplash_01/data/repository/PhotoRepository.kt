@@ -15,5 +15,5 @@ class PhotoRepository(private val remote: PhotoDataSource.Remote) {
 
     suspend fun getTopics(page: Int = Constant.DEFAULT_PAGE) = remote.getTopics(page)
 
-    suspend fun getRandomPhotos() = remote.getRandomPhotos()
+    suspend fun getRandomPhotos() = remote.getRandomPhotos() 
 }

@@ -3,24 +3,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.sun.unsplash_01.ui.search.search_photo.SearchPhotoViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.sun.unsplash_01.ui.photo_collection.PhotoCollectionAdapter" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.search.search_photo.SearchPhotoFragment">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:onRefresh="@{viewModel::onRefresh}">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewPhoto"
+                android:id="@+id/recyclerViewPhotos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
+                app:adapter="@{adapter}"
+                app:isLoading="@{viewModel.isLoading}"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:onLoadMore="@{viewModel::onLoadData}"
                 app:spanCount="2" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

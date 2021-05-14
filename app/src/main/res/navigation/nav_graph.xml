@@ -14,6 +14,12 @@
         <action
             android:id="@+id/action_homePageFragment_to_imageDetailFragment"
             app:destination="@id/imageDetailFragment" />
+        <action
+            android:id="@+id/action_collectionFragment_to_photo_collectionFragment"
+            app:destination="@id/photoCollectionFragment" />
+        <action
+            android:id="@+id/action_searchCollectionFragment_to_photo_collectionFragment"
+            app:destination="@id/photoCollectionFragment" />
     </fragment>
 
     <fragment
@@ -24,16 +30,6 @@
         android:id="@+id/imageDetailFragment"
         android:name="com.sun.unsplash_01.ui.detail.ImageDetailFragment"
         android:label="ImageDetailFragment" />
-
-    <fragment
-        android:id="@+id/collectionFragment"
-        android:name="com.sun.unsplash_01.ui.collection.CollectionFragment"
-        android:label="CollectionFragment">
-
-        <action
-            android:id="@+id/action_collectionFragment_to_photo_collectionFragment"
-            app:destination="@id/photoCollectionFragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/photoCollectionFragment"
