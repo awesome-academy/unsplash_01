@@ -11,4 +11,8 @@
     <string name="warmth">Warmth</string>
     <string name="counter_photo"> %s Photos</string>
     <string name="text_loading">Loading...</string>
+    <string name="lock_scroll_view">Screen locked to draw, click again to unlock</string>
+    <string name="unlock_scroll_view">Screen unlocked</string>
+    <string name="rate_limit_exceeded">Rate limit exceeded</string>
+    <string name="no_network_connection">No network connection</string>
 </resources>
