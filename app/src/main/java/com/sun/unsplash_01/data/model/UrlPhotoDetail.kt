@@ -6,5 +6,7 @@ data class UrlPhotoDetail(
     @SerializedName("small")
     val small: String?,
     @SerializedName("thumb")
-    val thumb: String?
+    val thumb: String?,
+    @SerializedName("regular")
+    val regular: String?
 )

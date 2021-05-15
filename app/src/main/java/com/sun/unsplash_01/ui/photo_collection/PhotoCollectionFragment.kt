@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.sun.unsplash_01.R
 import com.sun.unsplash_01.data.model.Collection
 import com.sun.unsplash_01.databinding.FragmentPhotoCollectionBinding
 import com.sun.unsplash_01.ui.collection.CollectionFragment.Companion.BUNDLE_COLLECTION
+import com.sun.unsplash_01.ui.detail.PhotoDetailFragment
 import com.sun.unsplash_01.utils.Status
 import org.koin.android.ext.android.inject
 
@@ -37,6 +40,12 @@ class PhotoCollectionFragment : Fragment() {
     private fun handleEvent() {
         binding.buttonBack.setOnClickListener {
             findNavController().popBackStack()
+        }
+        photoCollectionAdapter.setOnClickItem {
+            findNavController().navigate(
+                R.id.imageDetailFragment,
+                bundleOf(PhotoDetailFragment.BUNDLE_PHOTO_ID to it.id)
+            )
         }
     }
 
