@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.sun.unsplash_01.data.model.PhotoCollection
 import com.sun.unsplash_01.data.repository.PhotoRepository
 import com.sun.unsplash_01.extensions.plusAssign
+import com.sun.unsplash_01.utils.Constant.API_COLLECTION
 import com.sun.unsplash_01.utils.Constant.DEFAULT_ID
 import com.sun.unsplash_01.utils.Constant.DEFAULT_PAGE
 import com.sun.unsplash_01.utils.LoadMoreRecyclerViewListener
@@ -22,6 +23,7 @@ class PhotoCollectionViewModel(
 
     private var currentPosition = DEFAULT_PAGE
     private var id: String = DEFAULT_ID
+    private var api: String = DEFAULT_ID
     private val _resource = MutableLiveData<Resource<LiveData<MutableList<PhotoCollection>>>>()
     val resource: LiveData<Resource<LiveData<MutableList<PhotoCollection>>>>
         get() = _resource
@@ -34,12 +36,17 @@ class PhotoCollectionViewModel(
     val photoCollection: LiveData<MutableList<PhotoCollection>>
         get() = _photoCollection
 
-    fun fetchCollections(id: String) {
+    fun fetchCollections(id: String, api: String) {
         viewModelScope.launch {
             try {
                 this@PhotoCollectionViewModel.id = id
+                this@PhotoCollectionViewModel.api = api
                 _photoCollection.plusAssign(
-                    photoRepository.getPhotosCollection(id, currentPosition)
+                    if (api == API_COLLECTION) {
+                        photoRepository.getPhotosCollection(id, currentPosition)
+                    } else {
+                        photoRepository.getPhotosTopic(id, currentPosition)
+                    }
                 )
                 _resource.postValue(Resource.success(data = photoCollection))
                 currentPosition++
@@ -52,12 +59,12 @@ class PhotoCollectionViewModel(
 
     override fun onLoadData() {
         _isLoading.value = true
-        fetchCollections(id)
+        fetchCollections(id, api)
     }
 
     override fun onRefresh() {
         _photoCollection.value?.clear()
         currentPosition = DEFAULT_PAGE
-        fetchCollections(id)
+        fetchCollections(id, api)
     }
 }

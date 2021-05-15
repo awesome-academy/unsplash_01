@@ -50,4 +50,10 @@ interface APIService {
     suspend fun getPhotoDetail(
         @Path("id") id: String?
     ): PhotoDetail
+
+    @GET("/topics/{id}/photos")
+    suspend fun getPhotosTopic(
+        @Path("id") id: String,
+        @Query("page") page: Int = Constant.DEFAULT_PAGE
+    ): MutableList<PhotoCollection>
 }

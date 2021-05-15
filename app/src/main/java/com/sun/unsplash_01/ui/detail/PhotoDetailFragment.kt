@@ -1,5 +1,6 @@
 package com.sun.unsplash_01.ui.detail
 
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.sun.unsplash_01.extensions.hideStatusBar
 import com.sun.unsplash_01.extensions.toGone
 import com.sun.unsplash_01.extensions.toVisible
 import com.sun.unsplash_01.utils.Status
+import com.sun.unsplash_01.utils.imagedownload.DownloadImage
 import org.koin.android.ext.android.inject
 
 class PhotoDetailFragment : Fragment() {
@@ -70,6 +72,11 @@ class PhotoDetailFragment : Fragment() {
         }
         binding.imageViewBack.setOnClickListener {
             findNavController().popBackStack()
+        }
+        binding.imageButtonDownload.setOnClickListener {
+            photoDetailViewModel.getUrlImage()?.let { urlImage ->
+                DownloadImage.newInstance(requireActivity()).downloadImage(urlImage)
+            }
         }
     }
 

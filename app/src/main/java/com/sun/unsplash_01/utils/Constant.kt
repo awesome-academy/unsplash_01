@@ -12,4 +12,6 @@ object Constant {
     const val DEFAULT_ID = ""
     const val API_CLIENT_ID = "client_id"
     const val DEFAULT_STRING = ""
+    const val API_TOPIC = "Topic"
+    const val API_COLLECTION = "Collection"
 }

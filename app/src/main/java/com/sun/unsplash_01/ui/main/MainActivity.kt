@@ -1,5 +1,6 @@
 package com.sun.unsplash_01.ui.main
 
+import android.Manifest
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.sun.unsplash_01.databinding.ActivityMainBinding
+import com.sun.unsplash_01.utils.imagedownload.CheckPermission
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +19,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (!CheckPermission(this).isPermissionGranted()) {
+            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CODE)
+        }
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
@@ -33,5 +39,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.dispatchTouchEvent(event)
+    }
+
+    companion object {
+        const val REQUEST_CODE = 0
     }
 }

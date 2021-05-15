@@ -16,4 +16,7 @@ class PhotoRemoteDataSource(private val apiService: APIService) : PhotoDataSourc
     override suspend fun getRandomPhotos() = apiService.getRandomPhotos()
 
     override suspend fun getPhotoDetail(id: String?): PhotoDetail = apiService.getPhotoDetail(id)
+
+    override suspend fun getPhotosTopics(id: String, page: Int) =
+        apiService.getPhotosTopic(id = id, page = page)
 }

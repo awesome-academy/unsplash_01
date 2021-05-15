@@ -28,5 +28,7 @@ class PhotoDataSource {
         suspend fun getRandomPhotos(): MutableList<PhotoCollection>
 
         suspend fun getPhotoDetail(id: String?): PhotoDetail
+
+        suspend fun getPhotosTopics(id: String, page: Int): MutableList<PhotoCollection>
     }
 }

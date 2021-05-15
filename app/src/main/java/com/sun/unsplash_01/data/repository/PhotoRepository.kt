@@ -30,4 +30,9 @@ class PhotoRepository(
     suspend fun alreadyFavorite(id: String?) = local.getImage(id)
 
     suspend fun getImages() = local.getImages()
+
+    suspend fun getPhotosTopic(
+        id: String,
+        page: Int = DEFAULT_PAGE
+    ) = remote.getPhotosTopics(id = id, page = page)
 }

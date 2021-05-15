@@ -4,15 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sun.unsplash_01.R
 import com.sun.unsplash_01.data.model.Collection
+import com.sun.unsplash_01.data.model.Topic
 import com.sun.unsplash_01.databinding.FragmentPhotoCollectionBinding
-import com.sun.unsplash_01.ui.collection.CollectionFragment.Companion.BUNDLE_COLLECTION
-import com.sun.unsplash_01.ui.detail.PhotoDetailFragment.Companion.BUNDLE_PHOTO_ID
+import com.sun.unsplash_01.ui.detail.PhotoDetailFragment
+import com.sun.unsplash_01.utils.Constant
 import com.sun.unsplash_01.utils.Status
 import org.koin.android.ext.android.inject
 
@@ -44,7 +46,7 @@ class PhotoCollectionFragment : Fragment() {
         photoCollectionAdapter.setOnClickItem {
             findNavController().navigate(
                 R.id.imageDetailFragment,
-                bundleOf(BUNDLE_PHOTO_ID to it.id)
+                bundleOf(PhotoDetailFragment.BUNDLE_PHOTO_ID to it.id)
             )
         }
     }
@@ -52,7 +54,20 @@ class PhotoCollectionFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         arguments?.getParcelable<Collection>(BUNDLE_COLLECTION)?.let {
-            photoCollectionViewModel.fetchCollections(it.id)
+
+            photoCollectionViewModel.fetchCollections(it.id, Constant.API_COLLECTION)
+            setTitle(Constant.API_COLLECTION, it.title)
+        } ?: arguments?.getParcelable<Topic>(BUNDLE_TOPIC)?.let {
+
+            photoCollectionViewModel.fetchCollections(it.id, Constant.API_TOPIC)
+            setTitle(Constant.API_TOPIC, it.title)
+        }
+    }
+
+    private fun setTitle(apiName: String, title: String) {
+        binding.apply {
+            textViewTitleCollection.text = title
+            textTitle.text = apiName
         }
     }
 
@@ -67,6 +82,7 @@ class PhotoCollectionFragment : Fragment() {
                     binding.swipeRefresh.isRefreshing = false
                 }
                 Status.LOADING -> {
+                    Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }
         })
@@ -83,6 +99,10 @@ class PhotoCollectionFragment : Fragment() {
     }
 
     companion object {
+
+        const val BUNDLE_COLLECTION = "BUNDLE_COLLECTION"
+        const val BUNDLE_TOPIC = "BUNDLE_TOPIC"
+
         fun newInstance() = PhotoCollectionFragment()
     }
 }
